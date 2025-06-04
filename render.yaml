@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: skytravel
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn core.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: core.settings
+      - key: SECRET_KEY
+        value: 'django-insecure-#^a%xyx21w$a4s*kypvyys2wr_+m7%di(+(hpa6fd28aniur+p'
+      - key: DEBUG
+        value: "False"
+ 
