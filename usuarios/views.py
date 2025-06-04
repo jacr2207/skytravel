@@ -71,6 +71,7 @@ def register_page(request):
 def verify_page(request):
     return render(request, 'verify.html')
 
+
 def login_page(request):
     return render(request, 'login.html')
 
