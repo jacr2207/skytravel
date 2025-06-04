@@ -2,13 +2,16 @@ services:
   - type: web
     name: skytravel
     env: python
-    buildCommand: "pip install -r requirements.txt"
+    buildCommand: "./build.sh"
     startCommand: "gunicorn core.wsgi:application"
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: core.settings
-      - key: SECRET_KEY
-        value: 'django-insecure-#^a%xyx21w$a4s*kypvyys2wr_+m7%di(+(hpa6fd28aniur+p'
       - key: DEBUG
         value: "False"
- 
+      - key: SECRET_KEY
+        value: "pon-una-clave-secreta-aqui"
+      - key: ALLOWED_HOSTS
+        value: "skytravel-1pfj.onrender.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: skytravel_db
+          property: connectionString
