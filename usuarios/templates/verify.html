@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificación en dos pasos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("{% static 'img/istockphoto-155439315-612x612.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    nav {
+      background: #3B82F6;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav .links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      margin: 3rem auto;
+      padding: 2.5rem 3rem;
+      max-width: 700px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .desc {
+      margin-bottom: 1.5rem;
+      font-size: 15px;
+    }
+    .info-box {
+      background: #E2E8F0;
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: inline-block;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #E2E8F0;
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 1.5rem;
+    }
+    .input-group img {
+      width: 24px;
+      margin-right: 10px;
+    }
+    .input-group input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 16px;
+      width: 100%;
+    }
+    .button {
+      padding: 12px 24px;
+      background-color: #3B82F6;
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 180px;
+    }
+    .msg {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: red;
+    }
+    .note {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SKYTRAVEL</div>
+    <div class="links">
+      <a href="#">Vuelos</a>
+      <a href="#">Reservas</a>
+      <a href="#">Contactos</a>
+      <a href="/api/users/login_html/">Iniciar sesión</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="title">Verificación en dos pasos</div>
+    <div class="desc">Este paso extra nos indica que eres tú quien está intentando iniciar sesión</div>
+
+    <div class="input-group">
+      <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="user" />
+      <div class="info-box" id="emailDisplay">correo@email.com</div>
+    </div>
+
+    <div class="note">Se acaba de enviar un mensaje con un código de verificación de 6 dígitos a tu correo.</div>
+
+    <form id="verifyForm">
+      <div class="input-group">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="lock" />
+        <input type="text" id="code" name="code" placeholder="Escribe el código" required>
+      </div>
+      <button type="submit" class="button">Iniciar sesión</button>
+      <div class="msg" id="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("verifyForm");
+    const message = document.getElementById("message");
+    const emailDisplay = document.getElementById("emailDisplay");
+
+    const email = localStorage.getItem("userEmail") || "correo@email.com";
+    emailDisplay.textContent = email;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      message.textContent = "";
+
+      const data = {
+        email: email,
+        code: form.code.value
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/users/verificar/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          message.style.color = "green";
+          message.textContent = "Cuenta verificada. Redirigiendo...";
+          setTimeout(() => {
+            window.location.href = "/api/users/dashboard/";
+          }, 2000);
+        } else {
+          message.textContent = result.error || "Código inválido.";
+        }
+      } catch (err) {
+        message.textContent = "Error al conectar con el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>

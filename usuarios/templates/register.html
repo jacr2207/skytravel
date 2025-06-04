@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - SkyTravel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("{% static 'img/istockphoto-155439315-612x612.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    nav {
+      background: #3B82F6;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    nav .logo { font-size: 1.5rem; font-weight: bold; }
+    nav .links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      margin: 2rem auto;
+      padding: 2.5rem 3rem;
+      max-width: 900px;
+      border-radius: 12px;
+    }
+    .title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+    }
+    label { font-weight: 600; display: block; margin-bottom: 6px; }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+    .full-width { grid-column: span 2; }
+    button {
+      grid-column: span 2;
+      padding: 14px;
+      background-color: #2563EB;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .msg {
+      grid-column: span 2;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SKYTRAVEL</div>
+    <div class="links">
+      <a href="#">Vuelos</a>
+      <a href="#">Reservas</a>
+      <a href="#">Contactos</a>
+      <a href="/api/users/login_html/">Iniciar sesión</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="title">Registrar usuario</div>
+    <form id="registerForm">
+      <div>
+        <label for="first_name">Nombres</label>
+        <input type="text" id="first_name" name="first_name" required>
+      </div>
+      <div>
+        <label for="last_name">Apellidos</label>
+        <input type="text" id="last_name" name="last_name" required>
+      </div>
+      <div>
+        <label for="phone">Teléfono</label>
+        <input type="text" id="phone" name="phone" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="password">Crear contraseña</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div>
+        <label for="password2">Repetir contraseña</label>
+        <input type="password" id="password2" name="password2" required>
+      </div>
+      <button type="submit">Registrar</button>
+      <div class="msg" id="message"></div>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      message.textContent = "";
+
+      const password = form.password.value;
+      const confirm = form.password2.value;
+
+      if (password !== confirm) {
+        message.style.color = "red";
+        message.textContent = "Las contraseñas no coinciden.";
+        return;
+      }
+
+      const data = {
+        email: form.email.value,
+        username: form.email.value.split("@")[0],
+        password: password,
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
+        phone: form.phone.value
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          message.style.color = "green";
+          message.textContent = "Registro exitoso. Redirigiendo...";
+          setTimeout(() => {
+            window.location.href = "/api/users/login_html/";
+          }, 2000);
+        } else {
+          const result = await response.json();
+          message.style.color = "red";
+          message.textContent = result.email || result.username || result.password || "Error al registrar.";
+        }
+      } catch (err) {
+        message.style.color = "red";
+        message.textContent = "Error de conexión con el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>

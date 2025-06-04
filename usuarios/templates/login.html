@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar sesión - SkyTravel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("{% static 'img/istockphoto-155439315-612x612.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    nav {
+      background: #3B82F6;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    nav .logo { font-size: 1.5rem; font-weight: bold; }
+    nav .links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      margin: 3rem auto;
+      padding: 2.5rem 3rem;
+      max-width: 600px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: #E2E8F0;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      padding: 10px 14px;
+    }
+    .input-group img {
+      width: 24px;
+      margin-right: 10px;
+    }
+    .input-group input {
+      border: none;
+      background: transparent;
+      outline: none;
+      flex-grow: 1;
+      font-size: 16px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .buttons button {
+      padding: 12px 24px;
+      background-color: #3B82F6;
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 150px;
+    }
+    .msg {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SKYTRAVEL</div>
+    <div class="links">
+      <a href="#">Vuelos</a>
+      <a href="#">Reservas</a>
+      <a href="#">Contactos</a>
+      <a href="/api/users/login_html/">Iniciar sesión</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="title">Iniciar sesión</div>
+    <form id="loginForm">
+      <div class="input-group">
+        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="user" />
+        <input type="email" id="email" name="email" placeholder="Email.ID" required>
+      </div>
+      <div class="input-group">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="lock" />
+        <input type="password" id="password" name="password" placeholder="*************" required>
+      </div>
+      <div class="buttons">
+        <button type="button" onclick="location.href='/api/users/registro/'">Registrar</button>
+        <button type="submit">Iniciar sesión</button>
+      </div>
+      <div class="msg" id="message"></div>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      message.textContent = "";
+
+      const email = form.email.value;
+      const data = {
+        email: email,
+        password: form.password.value
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem("userEmail", email);
+          message.style.color = "green";
+          message.textContent = "Inicio de sesión exitoso. Redirigiendo...";
+          setTimeout(() => {
+            window.location.href = "/api/users/verificar_html/";
+          }, 2000);
+        } else {
+          message.textContent = result.detail || "Credenciales inválidas.";
+        }
+      } catch (err) {
+        message.textContent = "Error al conectar con el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
