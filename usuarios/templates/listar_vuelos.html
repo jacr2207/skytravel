@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,16 +9,36 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: url('/static/images/fondo_vuelos.jpg') no-repeat center center fixed;
+      background: url("{% static 'img/istockphoto-155439315-612x612.jpg' %}") no-repeat center center fixed;
       background-size: cover;
-      color: #333;
+      
+    }
+
+    nav {
+      background-color: #3B82F6;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav .links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
     }
 
     .overlay {
-      background-color: rgba(255, 255, 255, 0.85);
-      min-height: 100vh;
-      padding: 2rem;
-    }
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
 
     .container {
       max-width: 1000px;
@@ -70,6 +91,14 @@
   </style>
 </head>
 <body>
+  <nav>
+    <div class="logo">SKYTRAVEL</div>
+    <div class="links">
+      <a href="{% url 'crear_vuelo' %}">Crear vuelo</a>
+      <a href="{% url 'listar_vuelos' %}">Listar vuelos</a>
+    </div>
+  </nav>
+
   <div class="overlay">
     <div class="container">
       <div class="title">✈️ Vuelos disponibles</div>

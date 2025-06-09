@@ -11,6 +11,7 @@
       font-family: 'Inter', sans-serif;
       background: url("{% static 'img/istockphoto-155439315-612x612.jpg' %}") no-repeat center center fixed;
       background-size: cover;
+      color: #111827;
     }
 
     nav {
@@ -36,38 +37,50 @@
 
     .content {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      padding: 3rem 1rem;
-      color: #111827;
+      min-height: calc(100vh - 80px);
+      padding: 2rem;
       text-align: center;
+      background-color: rgba(255,255,255,0.7);
+    }
+
+    .content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
     }
 
     .row {
       display: flex;
-      justify-content: center;
-      gap: 4rem;
-      margin-top: 2rem;
       flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: center;
     }
 
     .info-box {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
+      background-color: white;
+      border-radius: 16px;
       padding: 2rem;
-      max-width: 350px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .info-box img {
-      width: 60px;
+      width: 64px;
+      height: 64px;
       margin-bottom: 1rem;
     }
 
     .info-box h3 {
       margin: 0;
+      font-size: 1.2rem;
       margin-bottom: 0.5rem;
+    }
+
+    .info-box p {
+      margin: 0;
+      line-height: 1.5;
     }
   </style>
 </head>
