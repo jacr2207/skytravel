@@ -97,12 +97,13 @@
   <nav>
     <div class="logo">SKYTRAVEL</div>
     <div class="links">
-      <a href="#">Vuelos</a>
-      <a href="#">Reservas</a>
-      <a href="#">Contactos</a>
-      <a href="#">Cerrar sesión</a>
+      <a href="{% url 'vuelos_usuario' %}">Vuelos</a>
+      <a href="{% url 'mis_reservas' %}">Reservas</a>
+      <a href="{% url 'contacto' %}">Contactos</a>
+      <a href="{% url 'logout' %}">Cerrar sesión</a>
     </div>
   </nav>
+
 
   <div class="search-bar">
     <input type="text" placeholder="Origen">
