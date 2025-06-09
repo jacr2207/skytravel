@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear vuelo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F3F4F6;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    button {
+      background-color: #3B82F6;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .form-section {
+      margin-top: 1rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align:center;">Crear nuevo vuelo</h2>
+
+    {% if exito %}
+      <p class="success">✈️ Vuelo creado correctamente.</p>
+    {% endif %}
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Autenticación del admin -->
+      <div class="{% if autorizado %}hidden{% endif %}">
+        <label for="admin_username">Usuario administrador:</label>
+        <input type="text" name="admin_username" required>
+
+        <label for="admin_password">Contraseña:</label>
+        <input type="password" name="admin_password" required>
+
+        <button type="submit">Validar acceso</button>
+      </div>
+
+      <!-- Formulario de vuelo -->
+      {% if autorizado %}
+        <div class="form-section">
+          <label for="id_airline">Aerolínea</label>
+          {{ form.airline }}
+
+          <label for="id_origin">Origen</label>
+          {{ form.origin }}
+
+          <label for="id_destination">Destino</label>
+          {{ form.destination }}
+
+          <label for="id_departure_time">Fecha y hora de salida</label>
+          <input type="datetime-local" name="departure_time" required>
+
+          <label for="id_arrival_time">Fecha y hora de llegada</label>
+          <input type="datetime-local" name="arrival_time" required>
+
+          <label for="id_total_seats">Total de asientos</label>
+          {{ form.total_seats }}
+
+          <!-- Se incluyen nuevamente los campos ocultos para mantener la sesión -->
+          <input type="hidden" name="admin_username" value="{{ request.POST.admin_username }}">
+          <input type="hidden" name="admin_password" value="{{ request.POST.admin_password }}">
+
+          <button type="submit">Guardar vuelo</button>
+        </div>
+      {% endif %}
+    </form>
+  </div>
+</body>
+</html>

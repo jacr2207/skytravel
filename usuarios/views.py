@@ -77,4 +77,7 @@ def login_page(request):
 
 def dashboard_page(request):
     return render(request, 'dashboard.html')
+
+def contacto_page(request):
+    return render(request, 'contacto.html')
 # Create your views here.

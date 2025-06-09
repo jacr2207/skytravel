@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>SkyTravel - Vuelos</title>
+  <title>SkyTravel - Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -91,20 +91,14 @@
   <nav>
     <div class="logo">SKYTRAVEL</div>
     <div class="links">
-      <a href="#">Vuelos</a>
-      <a href="#">Reservas</a>
-      <a href="#">Contactos</a>
-      <a href="#">Iniciar sesión</a>
+      <a href="{% url 'vuelos_usuario' %}">Vuelos</a>
+      <a href="{% url 'mis_reservas' %}">Reservas</a>
+      <a href="{% url 'contacto' %}">Contactos</a>
+      <a href="{% url 'logout' %}">Cerrar sesión</a>
     </div>
   </nav>
 
-  <div class="search-bar">
-    <input type="text" placeholder="Origen">
-    <input type="text" placeholder="Destino">
-    <input type="date">
-    <button>🔍</button>
-  </div>
-
+  <!-- Puedes mantener las tarjetas de promoción si quieres -->
   <div class="cards">
     <div class="card">
       <img src="https://cdn.pixabay.com/photo/2020/10/18/11/23/colombia-5662144_1280.jpg" alt="Armenia">
@@ -113,41 +107,7 @@
         <small>Por trayecto desde</small>
       </div>
     </div>
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2016/11/29/08/47/guatape-1867027_1280.jpg" alt="Medellín">
-      <div class="card-body">
-        <h3>Medellín <span>COP 219.500</span></h3>
-        <small>Por trayecto desde</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2018/11/19/21/26/amazonas-3825813_1280.jpg" alt="Quibdó">
-      <div class="card-body">
-        <h3>Quibdó <span>COP 219.900</span></h3>
-        <small>Por trayecto desde</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2020/10/18/11/23/colombia-5662144_1280.jpg" alt="Armenia">
-      <div class="card-body">
-        <h3>Armenia <span>COP 213.500</span></h3>
-        <small>Por trayecto desde</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2016/11/29/08/47/guatape-1867027_1280.jpg" alt="Medellín">
-      <div class="card-body">
-        <h3>Medellín <span>COP 219.500</span></h3>
-        <small>Por trayecto desde</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://cdn.pixabay.com/photo/2018/11/19/21/26/amazonas-3825813_1280.jpg" alt="Quibdó">
-      <div class="card-body">
-        <h3>Quibdó <span>COP 219.900</span></h3>
-        <small>Por trayecto desde</small>
-      </div>
-    </div>
+    <!-- Más tarjetas aquí... -->
   </div>
 </body>
 </html>

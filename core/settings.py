@@ -29,8 +29,7 @@ SECRET_KEY = 'django-insecure-#^a%xyx21w$a4s*kypvyys2wr_+m7%di(+(hpa6fd28aniur+p
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
-
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Application definition
 
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'api',
     'usuarios',
+    'flights',
 ]
 
 MIDDLEWARE = [
