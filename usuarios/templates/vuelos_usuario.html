@@ -129,6 +129,7 @@
         <input type="text" name="origin" placeholder="Origen" value="{{ request.GET.origin }}">
         <input type="text" name="destination" placeholder="Destino" value="{{ request.GET.destination }}">
         <input type="date" name="fecha" placeholder="Fecha de salida" value="{{ request.GET.fecha }}">
+        <input type="text" name="price" placeholder="Precio unitario" value="{{ request.GET.price }}">
         <button type="submit">Filtrar</button>
       </form>
     </div>
@@ -144,17 +145,24 @@
           <div class="error">{{ mensaje_error }}</div>
         {% endif %}
 
-        <form method="POST" action="{% url 'reservar_vuelo' vuelo.id %}">
-          {% csrf_token %}
-          <label>Cantidad de asientos:</label>
-          <input type="number" name="cantidad_asientos" min="1" value="{{ cantidad_enviada|default:1 }}" required>
-          <br>
-          <button class="btn" type="submit">Reservar</button>
-        </form>
+        <form method="POST" action="{% url 'reservar_vuelo' vuelo.id %}" onsubmit="return confirmarPago(this, {{ vuelo.price }})">
+       {% csrf_token %}
+      <label>Cantidad de asientos:</label>
+      <input type="number" name="cantidad_asientos" min="1" value="1" required>
+      <button type="submit" class="btn">Reservar</button>
+      </form>
+
       </div>
     {% empty %}
       <p style="text-align:center;">No hay vuelos disponibles.</p>
     {% endfor %}
   </div>
+  <script>
+  function confirmarPago(form, precio) {
+    const cantidad = form.cantidad_asientos.value;
+    const total = precio * cantidad;
+    return confirm(`Total a pagar: $${total.toLocaleString('es-CO')}. ¿Deseas confirmar la reserva?`);
+  }
+</script>
 </body>
 </html>

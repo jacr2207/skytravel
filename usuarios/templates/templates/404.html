@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página no encontrada</title>
+    <style>
+        body {
+            margin: 0;
+            background-image: url("{% static 'img/map-icon.png' %}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            padding-top: 15%;
+            background-repeat: no-repeat;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 20px;
+        }
+        a {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <h1>404 - No encontrado</h1>
+        <p>No contamos con ese componente activo.</p>
+        <a href="{% url 'dashboard' %}">Volver al inicio</a>
+    </div>
+</body>
+</html>

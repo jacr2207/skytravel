@@ -156,3 +156,5 @@ def reservar_vuelo(request, vuelo_id):
             'mensaje_error_vuelo_id': vuelo.id,
             'cantidad_enviada': cantidad
         })
+    
+    
