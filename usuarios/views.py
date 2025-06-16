@@ -71,7 +71,7 @@ class VerifyCodeView(APIView):
 def register_page(request):
     return render(request, 'register.html')
 
-@login_required
+
 def verify_page(request):
     return render(request, 'verify.html')
 
