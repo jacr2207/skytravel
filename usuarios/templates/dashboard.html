@@ -100,7 +100,10 @@
       <a href="{% url 'vuelos_usuario' %}">Vuelos</a>
       <a href="{% url 'mis_reservas' %}">Reservas</a>
       <a href="{% url 'contacto' %}">Contactos</a>
-      <a href="{% url 'logout' %}">Cerrar sesión</a>
+      <form action="{% url 'logout' %}" method="post" style="display:inline;">
+         {% csrf_token %}
+         <button type="submit" style="background:none;border:none;color:white;cursor:pointer;">Cerrar sesión</button>
+      </form>
     </div>
   </nav>
 

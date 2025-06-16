@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+@login_required
 def vuelos_disponibles(request):
     vuelos = Flight.objects.filter(is_active=True).order_by('departure_time')
 
@@ -38,6 +39,7 @@ def vuelos_disponibles(request):
         'reservas': reservas
     })
 
+@login_required
 def listar_vuelos(request):
     vuelos = Flight.objects.all().order_by('-departure_time')
     return render(request, 'listar_vuelos.html', {'vuelos': vuelos})

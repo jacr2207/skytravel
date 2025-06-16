@@ -25,7 +25,7 @@ from django.shortcuts import render
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
 
-handler404 = custom_404_view
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,3 +38,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = custom_404_view

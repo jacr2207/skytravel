@@ -69,7 +69,10 @@
       <a href="{% url 'dashboard_page' %}">Dashboard</a>
       <a href="{% url 'vuelos_usuario' %}">Reservar</a>
       <a href="{% url 'contacto' %}">Contactos</a>
-      <a href="{% url 'logout' %}">Cerrar sesión</a>
+      <form action="{% url 'logout' %}" method="post" style="display:inline;">
+         {% csrf_token %}
+         <button type="submit" style="background:none;border:none;color:white;cursor:pointer;">Cerrar sesión</button>
+      </form>
     </div>
   </nav>
 

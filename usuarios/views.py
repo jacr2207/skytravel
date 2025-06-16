@@ -13,7 +13,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.views.decorators.http import require_http_methods
 
 from django.shortcuts import render
     
@@ -68,6 +71,7 @@ class VerifyCodeView(APIView):
 def register_page(request):
     return render(request, 'register.html')
 
+@login_required
 def verify_page(request):
     return render(request, 'verify.html')
 
@@ -75,9 +79,15 @@ def verify_page(request):
 def login_page(request):
     return render(request, 'login.html')
 
+@login_required
 def dashboard_page(request):
     return render(request, 'dashboard.html')
 
 def contacto_page(request):
     return render(request, 'contacto.html')
+
+@require_http_methods(["POST"])
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 # Create your views here.
