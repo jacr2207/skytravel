@@ -39,7 +39,7 @@ def vuelos_disponibles(request):
         'reservas': reservas
     })
 
-@login_required
+
 def listar_vuelos(request):
     vuelos = Flight.objects.all().order_by('-departure_time')
     return render(request, 'listar_vuelos.html', {'vuelos': vuelos})

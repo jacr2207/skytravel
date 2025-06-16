@@ -21,14 +21,20 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf.urls import handler404
 from django.shortcuts import render
+from django.http import HttpResponse
 
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
 
+def custom_500_view(request):
+    return render(request, '500.html', status=500)
 
+def empty_favicon(request):
+    return HttpResponse(status=204)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('favicon.ico', empty_favicon),
     path('api/users/', include('usuarios.urls')),
     path('api/vuelos/', include('flights.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
@@ -40,3 +46,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = custom_404_view
+handler500 = custom_500_view
+
