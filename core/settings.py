@@ -68,6 +68,8 @@ EMAIL_HOST_PASSWORD = 'ysgojeagfapwumnn'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 AUTH_USER_MODEL = 'usuarios.CustomUser'
 
+
+
 AUTHENTICATION_BACKENDS = [
     'usuarios.authentication.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',

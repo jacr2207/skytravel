@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-@login_required
+
 def vuelos_disponibles(request):
     vuelos = Flight.objects.filter(is_active=True).order_by('departure_time')
 
@@ -98,7 +98,7 @@ def editar_vuelo(request, vuelo_id):
         form = FlightForm(instance=vuelo)
     return render(request, 'crear_vuelo.html', {'form': form, 'autorizado': True})
 
-@login_required
+
 def mis_reservas(request):
     reservas = Reserva.objects.filter(usuario=request.user).select_related('vuelo')
 
@@ -123,7 +123,6 @@ def eliminar_vuelo(request, vuelo_id):
         return redirect('listar_vuelos')
     return redirect('listar_vuelos')
 
-@login_required
 def reservar_vuelo(request, vuelo_id):
     vuelo = get_object_or_404(Flight, id=vuelo_id)
     disponibilidad = get_object_or_404(SeatAvailability, flight=vuelo)
