@@ -79,7 +79,7 @@ def verify_page(request):
 def login_page(request):
     return render(request, 'login.html')
 
-@login_required
+
 def dashboard_page(request):
     return render(request, 'dashboard.html')
 
